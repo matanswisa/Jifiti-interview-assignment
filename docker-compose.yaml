@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  users_client_service:
+    build: 'client/users-transactions/'
+    # image: socket_service:1.0
+    ports:
+    - 3000:3000
+  users_server_service:
+    build: 'server/'
+    # image: socket_service:1.0
+    ports:
+    - 8000:8000
