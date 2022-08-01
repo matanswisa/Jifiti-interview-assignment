@@ -15,10 +15,10 @@ export type Cards = {
 }
 
 export type Transactions = {
-    "id": number,
-    "amount": string,
-    "transType": number // (1 - "AUTH", 2 - "COMMIT", 3 - "REFUND")
-    "cardId": number // ( id property from cards )
+    id: number,
+    amount: string,
+    transType: number // (1 - "AUTH", 2 - "COMMIT", 3 - "REFUND")
+    cardId: number // ( id property from cards )
 }
 
 
