@@ -26,6 +26,7 @@ export type ApiClient = {
     getApplications: () => Promise<Application[]>;
     getCards: (id: number) => Promise<Cards[]>;
     getTransactions: (id: number) => Promise<Transactions[]>;
+    getMoreInfo: (id: number) => Promise<any>;
 }
 
 export const createApiClient = (): ApiClient => {
@@ -38,6 +39,9 @@ export const createApiClient = (): ApiClient => {
         },
         getTransactions: (id: number) => {
             return axios.get(`/cards/${id}`).then((res) => res.data);
+        },
+        getMoreInfo: (id: number) => {
+            return axios.get(`/application/${id}`).then((res) => res.data);
         }
     }
 }
