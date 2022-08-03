@@ -8,76 +8,74 @@ import { api } from "../../App";
 import { UserData } from "../../RecoilStates/AtomUser";
 
 export interface TablesData {
-    id: number,
-    firstName: string,
-    lastName: string,
+  id: number,
+  firstName: string,
+  lastName: string,
 }
 
 
 
-
-
 export default function ApplicationTable() {
-    const [loadingTables, setLoadingTabls] = useState<boolean>(true);
-    const [tablesData, setTablesData] = useState<TablesData[]>([]);
-    const [dataUser, setDataUser] = useRecoilState(UserData)
-    const navigate = useNavigate();
+  const [loadingTables, setLoadingTabls] = useState<boolean>(true);
+  const [tablesData, setTablesData] = useState<TablesData[]>([]);
+  const [dataUser, setDataUser] = useRecoilState(UserData)
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
 
-        const getApplications = async () => await api.getApplications()
+    const getApplications = async () => await api.getApplications()
 
-        if (loadingTables) {
-            getApplications().then((data) => {
-                setTablesData(data);
-                setLoadingTabls(false);
-            })
-        }
-    }, [loadingTables])
+    if (loadingTables) {
+      getApplications().then((data) => {
+        setTablesData(data);
+        setLoadingTabls(false);
+      })
+    }
+  }, [loadingTables])
 
 
-    return (
-        <Content>
-            <Title>Users Table</Title>
-            <TableWarper>
-                <Table>
-                    <tr>
-                        <th>id</th>
-                        <th>שם פרטי</th>
-                        <th>שם משפחה</th>
-                    </tr>
-                    <TBody>
-                        {!loadingTables ? (
-                            tablesData.sort((a: TablesData, b: TablesData) => a.lastName.localeCompare(b.lastName)).map((index) => {
-                                return (
-                                    <tr onClick={() => { navigate('/idData'); setDataUser({ id: String(index.id), firstName: index.firstName, lastName: index.lastName }) }}>
-                                        <td>{index.id}</td>
-                                        <td>{index.firstName}</td>
-                                        <td>{index.lastName}</td>
-                                    </tr>
-                                )
-                            })
-                        ) : (
-                            <DivNotData>
-                                <RowDiv id="top">
-                                    <RowLoading></RowLoading>
-                                    <RowLoading></RowLoading>
-                                    <RowLoading></RowLoading>
-                                </RowDiv>
-                                {Array(8).fill(0).map((index) => {
-                                    return (<RowDiv key={index}>
-                                        <RowLoading></RowLoading>
-                                        <RowLoading></RowLoading>
-                                        <RowLoading></RowLoading>
-                                    </RowDiv>)
-                                })}
-                            </DivNotData>
-                        )}
-                    </TBody>
-                </Table>
-            </TableWarper>
-        </Content>
-    )
+  return (
+    <Content>
+      <Title>Users Table</Title>
+      <TableWarper>
+        <Table>
+          <tr>
+            <th>id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+          <TBody>
+            {!loadingTables ? (
+              tablesData.sort((a: TablesData, b: TablesData) => a.lastName.localeCompare(b.lastName)).map((application) => {
+                return (
+                  <tr onClick={() => { navigate('/transactions'); setDataUser({ id: String(application.id), firstName: application.firstName, lastName: application.lastName }) }}>
+                    <td>{application.id}</td>
+                    <td>{application.firstName}</td>
+                    <td>{application.lastName}</td>
+                  </tr>
+                )
+              })
+            ) : (
+              <DivContentLoading>
+                <RowDiv id="top">
+                  <RowLoading></RowLoading>
+                  <RowLoading></RowLoading>
+                  <RowLoading></RowLoading>
+                </RowDiv>
+                {Array(8).fill(0).map((index) => {
+                  return (<RowDiv key={index}>
+                    <RowLoading></RowLoading>
+                    <RowLoading></RowLoading>
+                    <RowLoading></RowLoading>
+                  </RowDiv>)
+                })}
+              </DivContentLoading>
+            )}
+          </TBody>
+        </Table>
+      </TableWarper>
+    </Content>
+  )
 }
 
 const BorderColor = keyframes`
@@ -93,7 +91,7 @@ const BorderColor = keyframes`
 `;
 
 
-const DivNotData = styled.div`
+const DivContentLoading = styled.div`
   position: relative;
   width: 100%;
   height: 100%;

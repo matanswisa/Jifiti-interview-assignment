@@ -21,7 +21,8 @@ function App() {
       <RecoilRoot>
         <Router>
           <Routes>
-            <Route path="/" element={<ApplicationInfo />}></Route>
+            <Route path="/" element={<ApplicationTable />}></Route>
+            <Route path="/transactions" element={<ApplicationInfo />}></Route>
           </Routes>
         </Router>
       </RecoilRoot>

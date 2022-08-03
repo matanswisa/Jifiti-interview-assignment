@@ -14,7 +14,7 @@ const axiosHeaderConfig = {
 
 router.get('/applications', async (req, res) => {
     const applications = await axios.get(`${API_URL}/applications`, axiosHeaderConfig);
-
+    console.log(applications.data);
     res.send(applications.data);
 });
 
