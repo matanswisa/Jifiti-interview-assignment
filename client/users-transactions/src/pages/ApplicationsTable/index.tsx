@@ -5,19 +5,14 @@ import { useRecoilState } from "recoil";
 import styled, { isStyledComponent, keyframes } from "styled-components";
 import { api } from "../../App";
 // import { URL } from "../../App";
-import { UserData } from "../../RecoilStates/AtomUser";
-
-export interface TablesData {
-  id: number,
-  firstName: string,
-  lastName: string,
-}
+import { UserData } from "../../RecoilStates/atoms";
+import { ApplicationInfo } from "../../types";
 
 
 
 export default function ApplicationTable() {
   const [loadingTables, setLoadingTabls] = useState<boolean>(true);
-  const [tablesData, setTablesData] = useState<TablesData[]>([]);
+  const [tablesData, setTablesData] = useState<ApplicationInfo[]>([]);
   const [dataUser, setDataUser] = useRecoilState(UserData)
   const navigate = useNavigate();
 
@@ -46,7 +41,7 @@ export default function ApplicationTable() {
           </tr>
           <TBody>
             {!loadingTables ? (
-              tablesData.sort((a: TablesData, b: TablesData) => a.lastName.localeCompare(b.lastName)).map((application) => {
+              tablesData.sort((a: ApplicationInfo, b: ApplicationInfo) => a.lastName.localeCompare(b.lastName)).map((application) => {
                 return (
                   <tr onClick={() => { navigate('/transactions'); setDataUser({ id: String(application.id), firstName: application.firstName, lastName: application.lastName }) }}>
                     <td>{application.id}</td>
