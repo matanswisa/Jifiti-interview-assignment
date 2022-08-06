@@ -11,18 +11,19 @@ interface TableProps {
   title: string;
   headers: string[];
   rowsData: Array<rowsData>;
+  rowEventClick?: (args: any) => void | any;
 }
 
-const renderRowData = (headers: string[], rowData: rowsData) => {
-  return headers.map(header => {
-    return <td> {`${rowData[header as keyof rowsData]}`}</td>
+const renderRowData = (headers: string[], rowData: rowsData, cb: any) => {
+  return headers.map((header, index) => {
+    return <td key={index} onClick={() => cb ? cb(rowData) : null}> {`${rowData[header as keyof rowsData]}`}</td>
   })
 }
 
 export const GenericTable = (props: TableProps) => {
 
   const [loadingTables, setLoadingTabls] = useRecoilState<boolean>(LoadingAtom);
-  const { title, headers, rowsData } = props;
+  const { title, headers, rowsData, rowEventClick } = props;
 
 
   return (
@@ -32,7 +33,7 @@ export const GenericTable = (props: TableProps) => {
         <Table>
           <tr>
             {headers.map((header, index) => {
-              return <th>{header}</th>
+              return <th key={index}>{header}</th>
             })}
           </tr>
           <TBody>
@@ -40,7 +41,7 @@ export const GenericTable = (props: TableProps) => {
               rowsData.map((row) => {
                 return (
                   <tr>
-                    {renderRowData(headers, row)}
+                    {renderRowData(headers, row, rowEventClick)}
                   </tr>
                 )
               })

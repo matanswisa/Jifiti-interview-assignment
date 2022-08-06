@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 // import { Application, createApiClient } from './api/api';
 import './App.css';
-import ApplicationTable from './pages/ApplicationsTable';
+
 
 
 import { createApiClient } from './api/api';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from 'recoil';
-import ApplicationInfo from './pages/ApplicationInfo';
+import ApplicationTable from './pages/ApplicationsTable';
+import TransactionsTable from './pages/TransactionsTable';
 
 export const api = createApiClient();
 
@@ -22,7 +23,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<ApplicationTable />}></Route>
-            <Route path="/transactions" element={<ApplicationInfo />}></Route>
+            <Route path="/transactions" element={<TransactionsTable />}></Route>
           </Routes>
         </Router>
       </RecoilRoot>
