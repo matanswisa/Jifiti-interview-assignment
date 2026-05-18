@@ -1,164 +1,261 @@
 import styled, { keyframes } from "styled-components";
 
-export const BorderColor = keyframes`
-0%{
-  background-color:hsla(200, 20%, 70%)
-}
-
-
-100% {    
-background-color:hsla(200, 20%, 95%)
- 
-}    
+export const pulse = keyframes`
+  0% { opacity: 0.55; }
+  100% { opacity: 1; }
 `;
 
+export const Page = styled.main`
+  width: min(1180px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 40px 0 56px;
 
-export const DivContentLoading = styled.div`
-position: relative;
-width: 100%;
-height: 100%;
-border-bottom-right-radius: 10px;
-border-bottom-left-radius: 10px;
-background-color: #ffffff;
+  @media (max-width: 720px) {
+    width: min(100% - 24px, 1180px);
+    padding: 24px 0 36px;
+  }
 `;
 
-export const RowDiv = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-width: 100%;
-margin-bottom: 1.5rem;
-&&#top {
-margin-top: 0.5rem;
-}
-`;
-export const RowLoading = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-height: 2.5rem;
-width: 33%;
-margin: 0 auto;
-/* border-radius: 15px; */
-background-color: #e4e0e0;
-animation-name: ${BorderColor};
-animation-duration: 0.8s;
-animation-direction: alternate;
-animation-iteration-count: infinite ;
-animation-iteration-count:linear;
-&&:nth-last-child(even) {
-/* background: #d6d4d4; */
-opacity: 0.7;
-}
-`;
-
-export const TBody = styled.div`
-width: 100%;
-  position: relative;
-  overflow-x: auto;
-  &&::-webkit-scrollbar {
-width: 3px; /* width of the entire scrollbar */
-height: 0.6rem;
-}
-
-&&::-webkit-scrollbar-track {
-background: #feffffb0; /* color of the tracking area */
-border-radius: 10px;
-}
-
-&&::-webkit-scrollbar-thumb {
-background-color: #ff0000; /* color of the scroll thumb */
-border-radius: 50px; /* roundness of the scroll thumb */
-border: 10px solid #c0d9d9b1; /* creates padding around scroll thumb */
-}
-`
-export const TableWarper = styled.div`
-height: 70%;
-margin: 0 auto;
-/* margin-top: 5rem; */
-width: 60%;
-border-radius: 15px;
-box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );   
-`
-export const Table = styled.table`
-display: flex;
-flex-direction: column;
-/* justify-content: center; */
-align-items: center;
-border-radius: 5px;
-font-size: 1.2rem;
-font-weight: normal;
-border: none;
-border-collapse: collapse;
-width: 100%;
-max-width: 100%;
-height: 100%;
-white-space: nowrap;
-background-color: #ffffff;
-
-td,
-th {
-text-align: center;
-padding: 1%;
-width: 100%;
-
-}
-td {
-color: black;
-border-right: 1px solid #f8f8f8;
-font-size: 1.1rem;
-}
-th:nth-child(odd) {
-color: black;
-background: #a4a6a8;
-}
-tr:nth-child(even) {
-background: #F8F8F8;
-}
-tr:nth-child(even) {
-background: #f8f8f8;
-}
-th:last-child{
-  border-bottom: none;
-}
-tr {
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-width: 100%;
-cursor: pointer;
-transition: all ease-in-out  0.5s ;
-
-}
-th{
-cursor: default;
-color: #ffffff;
-background: #4FC3A1;
-}
-tr:hover{
-background-color:#e7caca;
-/* transform: scale(1.001); */
-/* width: 99.8%; */
-
-/* transition: all ease-in-out 0.2s; */
-}
-
-
-`
-export const Content = styled.div`
-  width: 100vw;
-  height: 100vh;
+export const Hero = styled.section`
   display: flex;
-  flex-direction: column;
-  /* justify-content: space-around; */
-  `
-export const Title = styled.div`
-  font-size: 1.2rem;
-  /* text-align: center; */
-  height: 10%;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+
+  @media (max-width: 820px) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+`;
+
+export const Eyebrow = styled.div`
+  color: #0f766e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+`;
+
+export const Title = styled.h1`
+  color: #0f172a;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1;
+  margin: 0;
+`;
+
+export const Subtitle = styled.p`
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 12px 0 0;
+  max-width: 720px;
+`;
+
+export const Toolbar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-decoration: underline;
-  `
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @media (max-width: 720px) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+`;
+
+export const SearchInput = styled.input`
+  width: min(360px, 100%);
+  border: 1px solid #d7dee8;
+  border-radius: 12px;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  padding: 12px 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
+  }
+`;
+
+export const BackButton = styled.button`
+  border: 1px solid #d7dee8;
+  border-radius: 12px;
+  color: #0f172a;
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 12px 14px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: #14b8a6;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+    transform: translateY(-1px);
+  }
+`;
+
+export const StatGrid = styled.section`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 22px 0;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const StatCard = styled.article`
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+  padding: 18px;
+`;
+
+export const StatLabel = styled.div`
+  color: #64748b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+`;
+
+export const StatValue = styled.div`
+  color: #0f172a;
+  font-size: 1.8rem;
+  font-weight: 800;
+`;
+
+export const TableCard = styled.section`
+  overflow: hidden;
+  border: 1px solid #dfe7ef;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.12);
+`;
+
+export const TableHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #edf2f7;
+  padding: 18px 20px;
+`;
+
+export const TableTitle = styled.h2`
+  color: #0f172a;
+  font-size: 1.05rem;
+  margin: 0;
+`;
+
+export const TableHint = styled.div`
+  color: #64748b;
+  font-size: 0.88rem;
+`;
+
+export const ScrollArea = styled.div`
+  max-height: min(64vh, 680px);
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+    border: 2px solid #f1f5f9;
+  }
+`;
+
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+`;
+
+export const THead = styled.thead`
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`;
+
+export const TBody = styled.tbody``;
+
+export const Th = styled.th`
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 15px 18px;
+  text-align: left;
+  text-transform: uppercase;
+`;
+
+export const Td = styled.td`
+  border-top: 1px solid #eef2f7;
+  color: #334155;
+  font-size: 0.95rem;
+  padding: 16px 18px;
+`;
+
+export const Tr = styled.tr<{ $clickable?: boolean }>`
+  cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
+  transition: background 0.18s ease;
+
+  &:nth-child(even) {
+    background: #fbfdff;
+  }
+
+  &:hover {
+    background: ${({ $clickable }) => ($clickable ? "#ecfeff" : "inherit")};
+  }
+`;
+
+export const Badge = styled.span<{ $tone?: "success" | "warning" | "danger" | "neutral" }>`
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  color: ${({ $tone }) => {
+    if ($tone === "success") return "#047857";
+    if ($tone === "warning") return "#92400e";
+    if ($tone === "danger") return "#b91c1c";
+    return "#475569";
+  }};
+  background: ${({ $tone }) => {
+    if ($tone === "success") return "#d1fae5";
+    if ($tone === "warning") return "#fef3c7";
+    if ($tone === "danger") return "#fee2e2";
+    return "#e2e8f0";
+  }};
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 6px 10px;
+`;
+
+export const EmptyState = styled.div`
+  color: #64748b;
+  padding: 44px 20px;
+  text-align: center;
+`;
+
+export const LoadingBar = styled.div`
+  height: 16px;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e2e8f0, #f8fafc);
+  animation: ${pulse} 0.8s ease-in-out infinite alternate;
+`;

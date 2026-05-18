@@ -11,3 +11,9 @@ export interface ApplicationInfo {
     lastName: string,
 }
 
+export interface SelectedUser {
+    id: string,
+    firstName: string,
+    lastName: string,
+}
+

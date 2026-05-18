@@ -1,10 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-// import { Application, createApiClient } from './api/api';
 import './App.css';
-
-
-
 import { createApiClient } from './api/api';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -23,7 +17,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<ApplicationTable />}></Route>
-            <Route path="/transactions" element={<TransactionsTable />}></Route>
+            <Route path="/transactions/:userId" element={<TransactionsTable />}></Route>
           </Routes>
         </Router>
       </RecoilRoot>
@@ -34,6 +28,8 @@ function App() {
 export default App;
 
 const Content = styled.div`
-  width:100vw;
-  height:100vh;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.14), transparent 30rem),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
 `

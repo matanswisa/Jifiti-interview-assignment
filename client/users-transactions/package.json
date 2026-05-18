@@ -1,5 +1,5 @@
 {
-  "name": "users-transactions",
+  "name": "customer-transactions-dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

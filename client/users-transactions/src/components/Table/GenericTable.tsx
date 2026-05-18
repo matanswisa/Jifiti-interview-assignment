@@ -1,71 +1,90 @@
-import React, { useEffect } from 'react';
-import { ApplicationInfo, UserTransactions } from '../../types';
-import { useRecoilState } from 'recoil';
-import { LoadingAtom } from '../../RecoilStates/atoms';
-import styled, { keyframes } from "styled-components";
-import { Content, DivContentLoading, RowDiv, RowLoading, Table, TableWarper, TBody, Title } from './TableStyle';
+import React from 'react';
+import { Badge, EmptyState, LoadingBar, ScrollArea, Table, TableCard, TableHeader, TableHint, TableTitle, TBody, Td, Th, THead, Tr } from './TableStyle';
 
-type rowsData = UserTransactions | ApplicationInfo;
+export interface TableColumn<T> {
+  key: keyof T;
+  label: string;
+  render?: (value: T[keyof T], row: T) => React.ReactNode;
+}
 
-interface TableProps {
+interface TableProps<T> {
   title: string;
-  headers: string[];
-  rowsData: Array<rowsData>;
-  rowEventClick?: (args: any) => void | any;
+  hint?: string;
+  columns: Array<TableColumn<T>>;
+  rowsData: T[];
+  loading?: boolean;
+  emptyMessage?: string;
+  rowEventClick?: (row: T) => void;
 }
 
-const renderRowData = (headers: string[], rowData: rowsData, cb: any) => {
-  return headers.map((header, index) => {
-    return <td key={index} onClick={() => cb ? cb(rowData) : null}> {`${rowData[header as keyof rowsData]}`}</td>
-  })
+const getTransactionTone = (value: string) => {
+  const normalized = value.toLowerCase();
+  if (normalized === 'commit') return 'success';
+  if (normalized === 'auth') return 'warning';
+  if (normalized === 'refund') return 'danger';
+  return 'neutral';
 }
 
-export const GenericTable = (props: TableProps) => {
+export const renderBadge = (value: string) => (
+  <Badge $tone={getTransactionTone(value)}>{value}</Badge>
+);
 
-  const [loadingTables, setLoadingTabls] = useRecoilState<boolean>(LoadingAtom);
-  const { title, headers, rowsData, rowEventClick } = props;
-
+export const GenericTable = <T extends Record<string, any>>(props: TableProps<T>) => {
+  const { title, hint, columns, rowsData, rowEventClick, loading = false, emptyMessage = 'No records found.' } = props;
 
   return (
-    <Content>
-      <Title>{title}</Title>
-      <TableWarper>
+    <TableCard>
+      <TableHeader>
+        <TableTitle>{title}</TableTitle>
+        {hint ? <TableHint>{hint}</TableHint> : null}
+      </TableHeader>
+      <ScrollArea>
         <Table>
-          <tr>
-            {headers.map((header, index) => {
-              return <th key={index}>{header}</th>
-            })}
-          </tr>
+          <THead>
+            <tr>
+              {columns.map((column) => (
+                <Th key={String(column.key)}>{column.label}</Th>
+              ))}
+            </tr>
+          </THead>
           <TBody>
-            {!loadingTables ? (
-              rowsData.map((row) => {
-                return (
-                  <tr>
-                    {renderRowData(headers, row, rowEventClick)}
-                  </tr>
-                )
-              })
+            {loading ? (
+              Array.from({ length: 8 }).map((_, rowIndex) => (
+                <Tr key={rowIndex}>
+                  {columns.map((column) => (
+                    <Td key={String(column.key)}>
+                      <LoadingBar />
+                    </Td>
+                  ))}
+                </Tr>
+              ))
+            ) : rowsData.length > 0 ? (
+              rowsData.map((row, rowIndex) => (
+                <Tr
+                  key={row.id ?? rowIndex}
+                  $clickable={Boolean(rowEventClick)}
+                  onClick={() => rowEventClick?.(row)}
+                >
+                  {columns.map((column) => {
+                    const value = row[column.key];
+                    return (
+                      <Td key={String(column.key)}>
+                        {column.render ? column.render(value, row) : String(value)}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              ))
             ) : (
-              <DivContentLoading>
-                <RowDiv id="top">
-                  <RowLoading></RowLoading>
-                  <RowLoading></RowLoading>
-                  <RowLoading></RowLoading>
-                </RowDiv>
-                {Array(8).fill(0).map((index) => {
-                  return (
-                    <RowDiv key={index}>
-                      <RowLoading></RowLoading>
-                      <RowLoading></RowLoading>
-                      <RowLoading></RowLoading>
-                    </RowDiv>
-                  )
-                })}
-              </DivContentLoading>
+              <Tr>
+                <Td colSpan={columns.length}>
+                  <EmptyState>{emptyMessage}</EmptyState>
+                </Td>
+              </Tr>
             )}
           </TBody>
         </Table>
-      </TableWarper>
-    </Content>
+      </ScrollArea>
+    </TableCard>
   )
 }
